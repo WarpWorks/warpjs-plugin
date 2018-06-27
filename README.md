@@ -18,6 +18,7 @@ A plugin configuration to be added to `.warp-works-warpjsrc`:
       "moduleName": "@some/module",
       "path": "/endpoints/base/path",
       "type": "optional type",
+      "auth": "value",
     }
 
 - `name` Name of the plugin. This is distinct from the plugin itself as it could
@@ -27,6 +28,11 @@ A plugin configuration to be added to `.warp-works-warpjsrc`:
 - `type` is optional. You can define your own types. See a list of
   [RESERVED_PLUGIN_TYPES](./lib/reserved-plugin-types.js) that are affecting
   `Studio` and `Content`.
+- `auth` is optional. You can define if auth is needed. The value can be
+  `"admin"`, `"content"`, `true`, or `false`. Default value is `false`. When
+  `admin` or `content` is used, the user must be logged in, and in that
+  group. A user in `admin` is allowed to access `content`. When `true`, any
+  logged in user can access it.
 
 When defining your own type, make sure that the same API is exposed, as plugins
 will expect a given API when interacting with the plugin.

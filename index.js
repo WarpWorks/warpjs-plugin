@@ -1,5 +1,7 @@
 const _ = require('lodash');
 
+const reservedPluginTypes = require('./lib/reserved-plugin-types');
+
 class WarpjsPluginError extends Error {};
 
 class WarpjsPlugin {
@@ -25,6 +27,14 @@ class WarpjsPlugin {
         return WarpjsPluginError;
     }
 
+    static get TYPES() {
+        return reservedPluginTypes;
+    }
+
+    get TYPES() {
+        return this.constructor.TYPES;
+    }
+
     get basename() {
         return this.packageJson.name.replace(/@/g, '').replace(/\//g, '-');
     }
@@ -47,6 +57,18 @@ class WarpjsPlugin {
 
     get pluginIdentifier() {
         return this.basename;
+    }
+
+    get requiresAdmin() {
+        return Boolean(this.config && this.config.auth && this.config.auth === 'admin');
+    }
+
+    get requiresContent() {
+        return Boolean(this.config && this.config.auth && this.config.auth === 'content');
+    }
+
+    get requiresUser() {
+        return Boolean(this.config && this.config.auth);
     }
 
     toJSON(domain, type, id) {
