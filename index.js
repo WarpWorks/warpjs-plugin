@@ -5,6 +5,17 @@ const reservedPluginTypes = require('./lib/reserved-plugin-types');
 // FIXME: This should extend WarpjsError, but not sure how to get it.
 class WarpjsPluginError extends Error {};
 
+function getBasename(packageJson) {
+    return packageJson.name.replace(/@/g, '').replace(/\//g, '-');
+}
+
+function getVersionedName(packageJson) {
+    const basename = getBasename(packageJson);
+    const version = packageJson.version;
+
+    return `${basename}-${version}`;
+}
+
 class WarpjsPlugin {
     constructor(config, warpCore, packageJson, pluginType) {
         this.config = Object.freeze(_.cloneDeep(config));
@@ -38,7 +49,7 @@ class WarpjsPlugin {
     }
 
     get basename() {
-        return this.packageJson.name.replace(/@/g, '').replace(/\//g, '-');
+        return getBasename(this.packageJson);
     }
 
     get version() {
@@ -46,7 +57,7 @@ class WarpjsPlugin {
     }
 
     get versionedName() {
-        return `${this.basename}-${this.version}`;
+        return getVersionedName(this.packageJson);
     }
 
     /**
@@ -85,6 +96,31 @@ class WarpjsPlugin {
                 requiresContent: this.requiresContent,
                 requiresUser: this.requiresUser
             })
+        });
+    }
+
+    static baseConstants(packageJson) {
+        const basename = getBasename(packageJson);
+        const version = packageJson.version;
+        const versionedName = getVersionedName(packageJson);
+
+        return Object.freeze({
+            appKeys: {
+                baseUrl: 'base-url',
+                pluginConfig: 'warpjs-plugin-config',
+                staticUrl: 'static-url',
+                warpCore: 'warpjs-core'
+            },
+            basename,
+            version: version,
+            versionedName: versionedName,
+            folders: {
+                assets: 'assets'
+            },
+            assets: {
+                css: `${versionedName}.min.css`,
+                js: `${versionedName}.min.js`
+            }
         });
     }
 }

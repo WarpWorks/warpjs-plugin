@@ -4,6 +4,13 @@ const WarpjsPlugin = require('./index');
 
 const expect = testHelpers.expect;
 
+const warpCore = {};
+const packageJson = {
+    name: '@test/module',
+    version: '1.2.3'
+};
+const pluginType = 'a-plugin-type';
+
 describe("index", () => {
     it("should expose a class", () => {
         expect(WarpjsPlugin).to.be.a('function');
@@ -19,16 +26,33 @@ describe("index", () => {
             expect(WarpjsPlugin).to.have.property('Error');
             expect(WarpjsPlugin.Error);
         });
+
+        context("baseConstants", () => {
+            it("should return a known value", () => {
+                const value = WarpjsPlugin.baseConstants(packageJson);
+                expect(value).to.deep.equal({
+                    basename: 'test-module',
+                    version: '1.2.3',
+                    versionedName: 'test-module-1.2.3',
+                    appKeys: {
+                        baseUrl: 'base-url',
+                        pluginConfig: 'warpjs-plugin-config',
+                        staticUrl: 'static-url',
+                        warpCore: 'warpjs-core'
+                    },
+                    assets: {
+                        css: 'test-module-1.2.3.min.css',
+                        js: 'test-module-1.2.3.min.js'
+                    },
+                    folders: {
+                        assets: 'assets'
+                    }
+                });
+            });
+        });
     });
 
     context("instance", () => {
-        const warpCore = {};
-        const packageJson = {
-            name: '@test/module',
-            version: '1.2.3'
-        };
-        const pluginType = 'a-plugin-type';
-
         let instance;
 
         beforeEach(() => {

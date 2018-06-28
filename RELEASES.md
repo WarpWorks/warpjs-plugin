@@ -1,5 +1,9 @@
 # WarpJS-Plugin releases notes
 
+## 1.2.2 - 2018-06-28
+
+- Adding `.baseConstants()`.
+
 ## 1.2.1 - 2018-06-28
 
 - Adding `pluginType`.
