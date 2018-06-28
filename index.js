@@ -2,13 +2,15 @@ const _ = require('lodash');
 
 const reservedPluginTypes = require('./lib/reserved-plugin-types');
 
+// FIXME: This should extend WarpjsError, but not sure how to get it.
 class WarpjsPluginError extends Error {};
 
 class WarpjsPlugin {
-    constructor(config, warpCore, packageJson) {
+    constructor(config, warpCore, packageJson, pluginType) {
         this.config = Object.freeze(_.cloneDeep(config));
         this.warpCore = warpCore;
         this.packageJson = Object.freeze(_.cloneDeep(packageJson));
+        this.pluginType = pluginType;
     }
 
     /**
@@ -75,7 +77,14 @@ class WarpjsPlugin {
         return Object.freeze({
             basename: this.basename,
             version: this.version,
-            versionedName: this.versionedName
+            versionedName: this.versionedName,
+            pluginIdentifier: this.pluginIdentifier,
+            pluginType: this.pluginType,
+            auth: Object.freeze({
+                requiresAdmin: this.requiresAdmin,
+                requiresContent: this.requiresContent,
+                requiresUser: this.requiresUser
+            })
         });
     }
 }

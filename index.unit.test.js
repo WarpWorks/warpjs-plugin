@@ -22,18 +22,21 @@ describe("index", () => {
     });
 
     context("instance", () => {
+        const warpCore = {};
+        const packageJson = {
+            name: '@test/module',
+            version: '1.2.3'
+        };
+        const pluginType = 'a-plugin-type';
+
         let instance;
 
         beforeEach(() => {
-            const config = {};
-
-            const warpCore = {};
-            const packageJson = {
-                name: '@test/module',
-                version: '1.2.3'
+            const config = {
+                auth: true
             };
 
-            instance = new WarpjsPlugin(config, warpCore, packageJson);
+            instance = new WarpjsPlugin(config, warpCore, packageJson, pluginType);
         });
 
         context(".app", () => {
@@ -62,6 +65,46 @@ describe("index", () => {
             expect(instance).to.have.property('pluginIdentifier', 'test-module');
         });
 
+        it("should expose 'pluginType'", () => {
+            expect(instance).to.have.property('pluginType', 'a-plugin-type');
+        });
+
+        context(".requiresAdmin()", () => {
+            it("should be false when auth!=='admin'", () => {
+                instance = new WarpjsPlugin({auth: 'foo'}, warpCore, packageJson, pluginType);
+                expect(instance).to.have.property('requiresAdmin', false);
+            });
+
+            it("should be true when auth==='admin'", () => {
+                instance = new WarpjsPlugin({auth: 'admin'}, warpCore, packageJson, pluginType);
+                expect(instance).to.have.property('requiresAdmin', true);
+            });
+        });
+
+        context(".requiresContent()", () => {
+            it("should be false when auth!=='content'", () => {
+                instance = new WarpjsPlugin({auth: 'foo'}, warpCore, packageJson, pluginType);
+                expect(instance).to.have.property('requiresContent', false);
+            });
+
+            it("should be true when auth==='content'", () => {
+                instance = new WarpjsPlugin({auth: 'content'}, warpCore, packageJson, pluginType);
+                expect(instance).to.have.property('requiresContent', true);
+            });
+        });
+
+        context(".requiresUser()", () => {
+            it("should be false when auth falsy", () => {
+                instance = new WarpjsPlugin({auth: false}, warpCore, packageJson, pluginType);
+                expect(instance).to.have.property('requiresUser', false);
+            });
+
+            it("should be true when auth truthy", () => {
+                instance = new WarpjsPlugin({auth: 'anything'}, warpCore, packageJson, pluginType);
+                expect(instance).to.have.property('requiresUser', true);
+            });
+        });
+
         context(".toJSON()", () => {
             it("should be a function with 3 params", () => {
                 expect(instance.toJSON).to.be.a('function').to.have.lengthOf(3);
@@ -73,7 +116,14 @@ describe("index", () => {
                 expect(value).to.deep.equal({
                     basename: 'test-module',
                     version: '1.2.3',
-                    versionedName: 'test-module-1.2.3'
+                    versionedName: 'test-module-1.2.3',
+                    pluginIdentifier: 'test-module',
+                    pluginType: 'a-plugin-type',
+                    auth: {
+                        requiresAdmin: false,
+                        requiresContent: false,
+                        requiresUser: true
+                    }
                 });
             });
         });
