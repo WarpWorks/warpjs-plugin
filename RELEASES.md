@@ -1,5 +1,9 @@
 # WarpJS-Plugin releases notes
 
+## 1.2.3 - 2019-04-03
+
+- `npm outdated` for `npm audit`.
+
 ## 1.2.2 - 2018-06-28
 
 - Adding `.baseConstants()`.

@@ -115,7 +115,10 @@ class WarpjsPlugin {
             version: version,
             versionedName: versionedName,
             folders: {
-                assets: 'assets'
+                assets: 'assets',
+                nycOutput: '.nyc_output',
+                pack: `${packageJson.name.replace('@', '').replace('/', '-')}-*.tgz`,
+                reports: 'reports'
             },
             assets: {
                 css: `${versionedName}.min.css`,

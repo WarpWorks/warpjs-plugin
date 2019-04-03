@@ -45,7 +45,10 @@ describe("index", () => {
                         js: 'test-module-1.2.3.min.js'
                     },
                     folders: {
-                        assets: 'assets'
+                        assets: 'assets',
+                        nycOutput: '.nyc_output',
+                        pack: `${packageJson.name.replace('@', '').replace('/', '-')}-*.tgz`,
+                        reports: 'reports'
                     }
                 });
             });
