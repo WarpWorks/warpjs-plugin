@@ -98,36 +98,36 @@ describe("index", () => {
 
         context(".requiresAdmin()", () => {
             it("should be false when auth!=='admin'", () => {
-                instance = new WarpjsPlugin({auth: 'foo'}, warpCore, packageJson, pluginType);
+                instance = new WarpjsPlugin({ auth: 'foo' }, warpCore, packageJson, pluginType);
                 expect(instance).to.have.property('requiresAdmin', false);
             });
 
             it("should be true when auth==='admin'", () => {
-                instance = new WarpjsPlugin({auth: 'admin'}, warpCore, packageJson, pluginType);
+                instance = new WarpjsPlugin({ auth: 'admin' }, warpCore, packageJson, pluginType);
                 expect(instance).to.have.property('requiresAdmin', true);
             });
         });
 
         context(".requiresContent()", () => {
             it("should be false when auth!=='content'", () => {
-                instance = new WarpjsPlugin({auth: 'foo'}, warpCore, packageJson, pluginType);
+                instance = new WarpjsPlugin({ auth: 'foo' }, warpCore, packageJson, pluginType);
                 expect(instance).to.have.property('requiresContent', false);
             });
 
             it("should be true when auth==='content'", () => {
-                instance = new WarpjsPlugin({auth: 'content'}, warpCore, packageJson, pluginType);
+                instance = new WarpjsPlugin({ auth: 'content' }, warpCore, packageJson, pluginType);
                 expect(instance).to.have.property('requiresContent', true);
             });
         });
 
         context(".requiresUser()", () => {
             it("should be false when auth falsy", () => {
-                instance = new WarpjsPlugin({auth: false}, warpCore, packageJson, pluginType);
+                instance = new WarpjsPlugin({ auth: false }, warpCore, packageJson, pluginType);
                 expect(instance).to.have.property('requiresUser', false);
             });
 
             it("should be true when auth truthy", () => {
-                instance = new WarpjsPlugin({auth: 'anything'}, warpCore, packageJson, pluginType);
+                instance = new WarpjsPlugin({ auth: 'anything' }, warpCore, packageJson, pluginType);
                 expect(instance).to.have.property('requiresUser', true);
             });
         });

@@ -1,5 +1,9 @@
 # WarpJS-Plugin releases notes
 
+## 1.2.4 - 2019-07-16
+
+- lodash CVE-2019-10744
+
 ## 1.2.3 - 2019-04-03
 
 - `npm outdated` for `npm audit`.
