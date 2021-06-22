@@ -1,14 +1,13 @@
 {
   "name": "@warp-works/warpjs-plugin",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.1",
   "description": "WarpJS base plugin",
   "main": "index.js",
   "publishConfig": {
-    "access": "public",
-    "tag": "node14"
+    "access": "public"
   },
   "engines": {
-    "node": ">=8.12.0"
+    "node": ">=14.15.0"
   },
   "scripts": {
     "prepack": "npm run test",
@@ -45,16 +44,16 @@
     "lodash": "~4.17.14"
   },
   "devDependencies": {
-    "@quoin/eslint-config-quoin": "^1.0.0-rc.2",
-    "@quoin/node-test-helpers": "^2.0.0-rc.1",
-    "eslint": "^7.28.0",
+    "@quoin/eslint-config-quoin": "^2.0.2",
+    "@quoin/node-test-helpers": "^2.0.1",
+    "eslint": "^7.29.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-html": "^6.1.2",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-json": "^3.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
-    "mocha": "^9.0.0",
+    "mocha": "^9.0.1",
     "nyc": "^15.1.0"
   }
 }
